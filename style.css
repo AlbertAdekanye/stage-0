@@ -1,0 +1,87 @@
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    article {
+      width: 100%;
+      max-width: 450px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      margin: 0 0 8px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .priority {
+      background: #ffe5e5;
+      color: #c00;
+    }
+
+    .status {
+      background: #e5f0ff;
+      color: #0044cc;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0;
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    li {
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 8px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:focus {
+      outline: 2px solid black;
+    }
+
+    .delete {
+      background: red;
+      color: white;
+    }

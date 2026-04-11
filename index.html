@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Todo Card</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<!-- Todo Card Component -->
- <article data-testid="test-todo-card">
 
-<!-- Test title -->
+<body>
+
+<article data-testid="test-todo-card" class="card">
+
+  <!-- Title -->
   <h3 data-testid="test-todo-title" id="title">
     Finish HNG Task
   </h3>
 
-  <!-- Test description -->
+  <!-- Description -->
   <p data-testid="test-todo-description">
-    Build a clean and testable todo card component
+    Build a clean and functional todo card component
   </p>
 
-  <!-- Test priority and status -->
+  <!-- Priority + Status -->
   <div class="row">
     <span class="badge priority" data-testid="test-todo-priority">
       High
     </span>
 
     <span class="badge status" data-testid="test-todo-status" id="status">
-      Pending
+      In Progress
     </span>
   </div>
 
+  <!-- Due Date -->
   <time 
     data-testid="test-todo-due-date" 
     datetime="2026-03-01T18:00:00Z">
     Due Mar 1, 2026
   </time>
 
+  <!-- Time Remaining -->
   <p data-testid="test-todo-time-remaining" id="time">
     Loading...
   </p>
 
-  <label>
+  <!-- Checkbox -->
+  <label class="checkbox">
     <input 
       type="checkbox" 
       data-testid="test-todo-complete-toggle" 
@@ -50,11 +54,13 @@
     Mark as complete
   </label>
 
-  <ul data-testid="test-todo-tags">
+  <!-- Tags -->
+  <ul data-testid="test-todo-tags" class="tags">
     <li data-testid="test-todo-tag-work">work</li>
     <li data-testid="test-todo-tag-urgent">urgent</li>
   </ul>
 
+  <!-- Actions -->
   <div class="actions">
     <button data-testid="test-todo-edit-button">Edit</button>
     <button data-testid="test-todo-delete-button" class="delete">
@@ -64,6 +70,7 @@
 
 </article>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

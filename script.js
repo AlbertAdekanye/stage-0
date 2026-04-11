@@ -5,7 +5,7 @@ const timeEl = document.getElementById("time");
 
 const dueDate = new Date("2026-03-01T18:00:00Z");
 
-// ---------- TIME REMAINING ----------
+// -------- TIME REMAINING --------
 function getTimeRemaining() {
   const now = new Date();
   const diff = dueDate - now;
@@ -14,7 +14,6 @@ function getTimeRemaining() {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  // overdue
   if (diff < 0) {
     const absMinutes = Math.abs(minutes);
     const absHours = Math.abs(hours);
@@ -25,7 +24,6 @@ function getTimeRemaining() {
     return `Overdue by ${absMinutes} minute(s)`;
   }
 
-  // upcoming
   if (days >= 2) return `Due in ${days} days`;
   if (days === 1) return "Due tomorrow";
   if (hours >= 1) return `Due in ${hours} hour(s)`;
@@ -41,22 +39,25 @@ function updateTime() {
 updateTime();
 setInterval(updateTime, 60000);
 
-// ---------- CHECKBOX TOGGLE ----------
-checkbox.addEventListener("change", () => {
+// -------- STATUS --------
+function updateStatus() {
   if (checkbox.checked) {
-    title.style.textDecoration = "line-through";
+    title.classList.add("completed");
     status.textContent = "Done";
   } else {
-    title.style.textDecoration = "none";
-    status.textContent = "Pending";
+    title.classList.remove("completed");
+    status.textContent = "In Progress";
   }
-});
+}
 
-// ---------- BUTTONS ----------
+updateStatus();
+checkbox.addEventListener("change", updateStatus);
+
+// -------- BUTTONS --------
 document
   .querySelector('[data-testid="test-todo-edit-button"]')
   .addEventListener("click", () => {
-    console.log("edit clicked");
+    console.log("Edit clicked");
   });
 
 document

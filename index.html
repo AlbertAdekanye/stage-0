@@ -19,13 +19,19 @@
     Finish HNG Stage 1b
   </h3>
 
-  <!-- Description -->
-  <div id="descBox" data-testid="test-todo-collapsible-section">
+  <!-- Description (FIXED ACCESSIBILITY) -->
+  <div
+    id="descBox"
+    data-testid="test-todo-collapsible-section"
+    role="region"
+    aria-labelledby="desc"
+  >
     <p data-testid="test-todo-description" id="desc">
       Build an advanced todo card with editing, status control, expand/collapse, and time tracking.
     </p>
   </div>
 
+  <!-- Expand button -->
   <button 
     id="expandBtn"
     data-testid="test-todo-expand-toggle"
@@ -48,15 +54,28 @@
   </select>
 
   <!-- Time -->
-  <time data-testid="test-todo-due-date" id="dueDate"></time>
-  <p data-testid="test-todo-time-remaining" id="time"></p>
+  <time 
+    data-testid="test-todo-due-date" 
+    id="dueDate">
+  </time>
+
+  <p 
+    data-testid="test-todo-time-remaining" 
+    id="time"
+    aria-live="polite">
+  </p>
+
   <span data-testid="test-todo-overdue-indicator" id="overdue"></span>
 
-  <!-- Checkbox -->
-  <label class="checkbox">
-    <input type="checkbox" data-testid="test-todo-complete-toggle" id="checkbox">
-    Mark as complete
-  </label>
+  <!-- Checkbox (FIXED LABEL ACCESSIBILITY) -->
+  <div class="checkbox">
+    <input 
+      type="checkbox"
+      id="checkbox"
+      data-testid="test-todo-complete-toggle"
+    />
+    <label for="checkbox">Mark as complete</label>
+  </div>
 
   <!-- Tags -->
   <ul data-testid="test-todo-tags" class="tags">
@@ -73,25 +92,25 @@
   <!-- Edit Form -->
   <div data-testid="test-todo-edit-form" id="editForm" hidden>
 
-    <label>Title
-      <input data-testid="test-todo-edit-title-input" id="editTitle">
-    </label>
+    <label for="editTitle">Title</label>
+    <input data-testid="test-todo-edit-title-input" id="editTitle">
 
-    <label>Description
-      <textarea data-testid="test-todo-edit-description-input" id="editDesc"></textarea>
-    </label>
+    <label for="editDesc">Description</label>
+    <textarea data-testid="test-todo-edit-description-input" id="editDesc"></textarea>
 
-    <label>Priority
-      <select data-testid="test-todo-edit-priority-select" id="editPriority">
-        <option>Low</option>
-        <option>Medium</option>
-        <option selected>High</option>
-      </select>
-    </label>
+    <label for="editPriority">Priority</label>
+    <select data-testid="test-todo-edit-priority-select" id="editPriority">
+      <option>Low</option>
+      <option>Medium</option>
+      <option>High</option>
+    </select>
 
-    <label>Due Date
-      <input type="datetime-local" data-testid="test-todo-edit-due-date-input" id="editDate">
-    </label>
+    <label for="editDate">Due Date</label>
+    <input 
+      type="datetime-local"
+      data-testid="test-todo-edit-due-date-input"
+      id="editDate"
+    />
 
     <div class="form-actions">
       <button data-testid="test-todo-save-button" id="saveBtn">Save</button>

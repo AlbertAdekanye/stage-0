@@ -24,23 +24,21 @@ const editDate = document.getElementById("editDate");
 const expandBtn = document.getElementById("expandBtn");
 const descBox = document.getElementById("descBox");
 
-// state
+/* STATE */
 let dueDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
 
-// PRIORITY UI
+/* PRIORITY */
 function updatePriorityUI() {
-  const value = priorityEl.textContent.trim().toLowerCase();
+  const val = priorityEl.textContent.trim().toLowerCase();
 
   priorityIndicator.classList.remove("low", "medium", "high");
 
-  if (value === "low") priorityIndicator.classList.add("low");
-  else if (value === "medium") priorityIndicator.classList.add("medium");
+  if (val === "low") priorityIndicator.classList.add("low");
+  else if (val === "medium") priorityIndicator.classList.add("medium");
   else priorityIndicator.classList.add("high");
 }
 
-updatePriorityUI();
-
-// time
+/* TIME */
 function updateTime() {
   if (status.textContent === "Done") {
     timeEl.textContent = "Completed";
@@ -49,7 +47,6 @@ function updateTime() {
   }
 
   const diff = dueDate - new Date();
-
   const mins = Math.floor(diff / 60000);
   const hrs = Math.floor(mins / 60);
   const days = Math.floor(hrs / 24);
@@ -72,10 +69,9 @@ updateTime();
 
 dueDateEl.textContent = dueDate.toLocaleString();
 
-// status sync
+/* STATUS SYNC */
 function syncStatus() {
   const val = statusControl.value;
-
   status.textContent = val;
 
   if (val === "Done") {
@@ -94,8 +90,9 @@ checkbox.addEventListener("change", () => {
   syncStatus();
 });
 
-// expand/collapse description
-descBox.classList.add("collapsed");
+/* EXPAND FIX (REAL SAFE VERSION) */
+const shouldCollapse = desc.textContent.length > 120;
+if (shouldCollapse) descBox.classList.add("collapsed");
 
 expandBtn.addEventListener("click", () => {
   const isCollapsed = descBox.classList.contains("collapsed");
@@ -106,21 +103,26 @@ expandBtn.addEventListener("click", () => {
   expandBtn.setAttribute("aria-expanded", isCollapsed);
 });
 
-// edit task
+/* EDIT */
+let lastBtn = null;
+
 editBtn.addEventListener("click", () => {
+  lastBtn = editBtn;
+
   editForm.hidden = false;
 
   editTitle.value = title.textContent;
   editDesc.value = desc.textContent;
   editPriority.value = priorityEl.textContent.trim();
+
+  editTitle.focus();
 });
 
-/* CANCEL EDIT */
 cancelBtn.addEventListener("click", () => {
   editForm.hidden = true;
+  if (lastBtn) lastBtn.focus();
 });
 
-/* SAVE EDIT */
 saveBtn.addEventListener("click", () => {
   title.textContent = editTitle.value;
   desc.textContent = editDesc.value;
@@ -133,4 +135,9 @@ saveBtn.addEventListener("click", () => {
 
   updatePriorityUI();
   editForm.hidden = true;
+
+  if (lastBtn) lastBtn.focus();
 });
+
+/* INIT */
+updatePriorityUI();

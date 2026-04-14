@@ -17,7 +17,7 @@ body {
   box-shadow: 0 8px 25px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 /* PRIORITY BAR */
@@ -37,20 +37,26 @@ h3 {
   font-weight: 600;
 }
 
+.completed {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
 /* DESCRIPTION */
 #desc {
   color: #475569;
   line-height: 1.5;
 }
 
-/* COLLAPSE */
+/* COLLAPSE FIX */
 #descBox {
-  max-height: none;
+  max-height: 200px;
+  overflow: hidden;
+  transition: 0.2s ease;
 }
 
 #descBox.collapsed {
-  max-height: 70px;
-  overflow: hidden;
+  max-height: 60px;
 }
 
 /* EXPAND BUTTON */
@@ -60,7 +66,6 @@ h3 {
   color: #2563eb;
   font-size: 13px;
   cursor: pointer;
-  padding: 0;
 }
 
 /* ROW */
@@ -97,11 +102,13 @@ select {
 /* TIME */
 #time {
   font-size: 13px;
+  color: #334155;
 }
 
+/* OVERDUE FIX */
 #overdue {
   color: #ef4444;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* CHECKBOX */
@@ -133,7 +140,6 @@ select {
   gap: 10px;
 }
 
-/* FIXED BUTTON SIZE */
 button {
   padding: 8px 12px;
   border-radius: 8px;
@@ -141,12 +147,6 @@ button {
   cursor: pointer;
 }
 
-/* REMOVE flex:1 (this was ruining UI) */
-.actions button {
-  flex: unset;
-}
-
-/* BUTTON COLORS */
 #editBtn {
   background: #111827;
   color: white;
@@ -167,7 +167,6 @@ button {
   gap: 10px;
 }
 
-/* INPUTS */
 #editForm input,
 #editForm textarea,
 #editForm select {
@@ -177,7 +176,6 @@ button {
   border: 1px solid #ddd;
 }
 
-/* FORM BUTTONS */
 .form-actions {
   display: flex;
   gap: 10px;

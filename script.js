@@ -1,67 +1,136 @@
-const checkbox = document.getElementById("checkbox");
 const title = document.getElementById("title");
+const desc = document.getElementById("desc");
 const status = document.getElementById("status");
+const statusControl = document.getElementById("statusControl");
+const checkbox = document.getElementById("checkbox");
+
 const timeEl = document.getElementById("time");
+const overdueEl = document.getElementById("overdue");
+const dueDateEl = document.getElementById("dueDate");
 
-const dueDate = new Date("2026-03-01T18:00:00Z");
+const priorityEl = document.getElementById("priority");
+const priorityIndicator = document.getElementById("priorityIndicator");
 
-// -------- TIME REMAINING --------
-function getTimeRemaining() {
-  const now = new Date();
-  const diff = dueDate - now;
+const editBtn = document.getElementById("editBtn");
+const editForm = document.getElementById("editForm");
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
+const editTitle = document.getElementById("editTitle");
+const editDesc = document.getElementById("editDesc");
+const editPriority = document.getElementById("editPriority");
+const editDate = document.getElementById("editDate");
+
+const expandBtn = document.getElementById("expandBtn");
+const descBox = document.getElementById("descBox");
+
+// state
+let dueDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+
+// PRIORITY UI
+function updatePriorityUI() {
+  const value = priorityEl.textContent.trim().toLowerCase();
+
+  priorityIndicator.classList.remove("low", "medium", "high");
+
+  if (value === "low") priorityIndicator.classList.add("low");
+  else if (value === "medium") priorityIndicator.classList.add("medium");
+  else priorityIndicator.classList.add("high");
+}
+
+updatePriorityUI();
+
+// time
+function updateTime() {
+  if (status.textContent === "Done") {
+    timeEl.textContent = "Completed";
+    overdueEl.textContent = "";
+    return;
+  }
+
+  const diff = dueDate - new Date();
+
+  const mins = Math.floor(diff / 60000);
+  const hrs = Math.floor(mins / 60);
+  const days = Math.floor(hrs / 24);
 
   if (diff < 0) {
-    const absMinutes = Math.abs(minutes);
-    const absHours = Math.abs(hours);
-    const absDays = Math.floor(absHours / 24);
-
-    if (absDays >= 1) return `Overdue by ${absDays} day(s)`;
-    if (absHours >= 1) return `Overdue by ${absHours} hour(s)`;
-    return `Overdue by ${absMinutes} minute(s)`;
+    overdueEl.textContent = "Overdue";
+    timeEl.textContent = `Overdue by ${Math.abs(hrs)} hour(s)`;
+    return;
   }
 
-  if (days >= 2) return `Due in ${days} days`;
-  if (days === 1) return "Due tomorrow";
-  if (hours >= 1) return `Due in ${hours} hour(s)`;
-  if (minutes >= 1) return `Due in ${minutes} minute(s)`;
+  overdueEl.textContent = "";
 
-  return "Due now!";
+  if (days > 0) timeEl.textContent = `Due in ${days} day(s)`;
+  else if (hrs > 0) timeEl.textContent = `Due in ${hrs} hour(s)`;
+  else timeEl.textContent = `Due in ${mins} minute(s)`;
 }
 
-function updateTime() {
-  timeEl.textContent = getTimeRemaining();
-}
-
-updateTime();
 setInterval(updateTime, 60000);
+updateTime();
 
-// -------- STATUS --------
-function updateStatus() {
-  if (checkbox.checked) {
+dueDateEl.textContent = dueDate.toLocaleString();
+
+// status sync
+function syncStatus() {
+  const val = statusControl.value;
+
+  status.textContent = val;
+
+  if (val === "Done") {
+    checkbox.checked = true;
     title.classList.add("completed");
-    status.textContent = "Done";
   } else {
+    checkbox.checked = false;
     title.classList.remove("completed");
-    status.textContent = "In Progress";
   }
 }
 
-updateStatus();
-checkbox.addEventListener("change", updateStatus);
+statusControl.addEventListener("change", syncStatus);
 
-// -------- BUTTONS --------
-document
-  .querySelector('[data-testid="test-todo-edit-button"]')
-  .addEventListener("click", () => {
-    console.log("Edit clicked");
-  });
+checkbox.addEventListener("change", () => {
+  statusControl.value = checkbox.checked ? "Done" : "Pending";
+  syncStatus();
+});
 
-document
-  .querySelector('[data-testid="test-todo-delete-button"]')
-  .addEventListener("click", () => {
-    alert("Delete clicked");
-  });
+// expand/collapse description
+descBox.classList.add("collapsed");
+
+expandBtn.addEventListener("click", () => {
+  const isCollapsed = descBox.classList.contains("collapsed");
+
+  descBox.classList.toggle("collapsed");
+
+  expandBtn.textContent = isCollapsed ? "Collapse" : "Expand";
+  expandBtn.setAttribute("aria-expanded", isCollapsed);
+});
+
+// edit task
+editBtn.addEventListener("click", () => {
+  editForm.hidden = false;
+
+  editTitle.value = title.textContent;
+  editDesc.value = desc.textContent;
+  editPriority.value = priorityEl.textContent.trim();
+});
+
+/* CANCEL EDIT */
+cancelBtn.addEventListener("click", () => {
+  editForm.hidden = true;
+});
+
+/* SAVE EDIT */
+saveBtn.addEventListener("click", () => {
+  title.textContent = editTitle.value;
+  desc.textContent = editDesc.value;
+  priorityEl.textContent = editPriority.value;
+
+  if (editDate.value) {
+    dueDate = new Date(editDate.value);
+    dueDateEl.textContent = dueDate.toLocaleString();
+  }
+
+  updatePriorityUI();
+  editForm.hidden = true;
+});

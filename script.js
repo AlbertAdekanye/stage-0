@@ -24,10 +24,10 @@ const editDate = document.getElementById("editDate");
 const expandBtn = document.getElementById("expandBtn");
 const descBox = document.getElementById("descBox");
 
-/* STATE */
+// Initialize due date to 2 days from now
 let dueDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
 
-/* PRIORITY */
+// priority UI update
 function updatePriorityUI() {
   const val = priorityEl.textContent.trim().toLowerCase();
 
@@ -38,7 +38,7 @@ function updatePriorityUI() {
   else priorityIndicator.classList.add("high");
 }
 
-/* TIME */
+// time
 function updateTime() {
   if (status.textContent === "Done") {
     timeEl.textContent = "Completed";
@@ -69,7 +69,7 @@ updateTime();
 
 dueDateEl.textContent = dueDate.toLocaleString();
 
-/* STATUS SYNC */
+// status sync
 function syncStatus() {
   const val = statusControl.value;
   status.textContent = val;
@@ -90,7 +90,7 @@ checkbox.addEventListener("change", () => {
   syncStatus();
 });
 
-/* EXPAND FIX (REAL SAFE VERSION) */
+// description collapse
 const shouldCollapse = desc.textContent.length > 120;
 if (shouldCollapse) descBox.classList.add("collapsed");
 
@@ -103,7 +103,7 @@ expandBtn.addEventListener("click", () => {
   expandBtn.setAttribute("aria-expanded", isCollapsed);
 });
 
-/* EDIT */
+// edit form
 let lastBtn = null;
 
 editBtn.addEventListener("click", () => {
@@ -139,5 +139,4 @@ saveBtn.addEventListener("click", () => {
   if (lastBtn) lastBtn.focus();
 });
 
-/* INIT */
 updatePriorityUI();

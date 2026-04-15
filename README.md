@@ -112,6 +112,6 @@ All required test IDs are implemented exactly as specified:
 ## 📂 How to Run Locally
 
 ```bash
-git clone https://github.com/your-username/hng-stage-1a.git
+git clone https://github.com/AlbertAdekanye/stage-0.git
 cd hng-stage-1a
 open index.html
